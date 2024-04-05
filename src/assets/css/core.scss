@@ -1,0 +1,103 @@
+$ID: "shyttt_slider";
+$CAROUSEL_CLASS: "shyttt_carousel";
+$ITEM_CLASS: "shyttt_item";
+$EXTRA_ITEM_CLASS: "shyttt_item--extra";
+$PAGINATION_CLASS: "shyttt_pagination";
+$PAGINATION_ITEM_CLASS: "shyttt_pagination--item";
+$NAVIGATION_NEXT: "shyttt_next";
+$NAVIGATION_PREVIOUS: "shyttt_prev";
+
+.#{$ID} {
+    position: relative;
+
+    &.coverflow {
+        .#{$CAROUSEL_CLASS} {
+            perspective: 100vw;
+        }
+        .#{$ITEM_CLASS} {
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            &.active ~ :nth-child(n):not(.active) {
+                transform: scale(0.8) rotateY(-30deg) translate3d(0,0,-100px);
+            }
+            &:has(~ .active) {
+                transform: scale(0.8) rotateY(30deg) translate3d(0,0,-100px);
+            }
+
+        }
+    }
+    .#{$CAROUSEL_CLASS} {
+        scroll-behavior: smooth;
+        display: flex;
+        height: 100%;
+        overflow: hidden;
+
+        &.dragging {
+            scroll-behavior: auto;
+            cursor: grab;
+        }
+
+        .#{$ITEM_CLASS},
+        .#{$EXTRA_ITEM_CLASS} {
+            flex: 0 0 100%;
+            box-sizing: border-box;
+        }
+    }
+
+    .#{$PAGINATION_CLASS} {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        margin-top: 10px;
+
+        .#{$PAGINATION_ITEM_CLASS} {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            &.active {
+                background-color: #000;
+            }
+        }
+    }
+
+    .#{$NAVIGATION_NEXT} {
+        right: 0.5rem;
+    }
+
+    .#{$NAVIGATION_PREVIOUS} {
+        left: 0.5rem
+    }
+
+    .#{$NAVIGATION_PREVIOUS},
+    .#{$NAVIGATION_NEXT} {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        transition: all 0.3s;
+
+        &.hidden {
+            display: none;
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    }
+}
